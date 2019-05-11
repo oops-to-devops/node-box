@@ -7,6 +7,19 @@ Supported tags:
 
 `sa_node`, `sa_node_nvm`
 
+
+Referencing as dependency using gilt (https://github.com/metacloud/gilt/,  `pip install python-gilt`)
+
+```
+# https://gilt.readthedocs.io/en/latest/
+  - git: https://github.com/oops-to-devops/node-box.git
+    version: master
+    dst: deployment/provisioners/node-box/
+    post_commands:
+      - make
+```
+
+
 Supported parameters overrides:
 
 
@@ -16,7 +29,7 @@ Supported parameters overrides:
 
 Using with vagrant boilerplate (https://github.com/Voronenko/devops-vagrant-ansible-boilerplate)
 
-```
+```ruby
 
     config.vm.provision "ansible" do |ansible|
         ansible.playbook = "deployment/provisioners/node-box/box_node.yml"
