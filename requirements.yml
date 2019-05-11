@@ -1,0 +1,4 @@
+- src: softasap.sa-node
+  name: sa-node
+- src: softasap.sa-node-nvm
+  name: sa-node-nvm

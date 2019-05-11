@@ -1,0 +1,62 @@
+---
+- hosts: node_box
+  gather_facts: False
+
+  vars:
+    - root_dir: "{{ playbook_dir }}"
+    - shared_dir: "{{ playbook_dir }}/../shared"
+
+
+  vars_files:
+    - ./node_vars.yml
+
+  pre_tasks:
+    - debug: msg="Pre tasks section"
+      tags: always
+
+    - name: ANSIBLE PYTHON | install python 2
+      raw: test -e /usr/bin/python || (apt -qqy update && apt install -qy python-minimal)
+      become: yes
+      tags: always
+
+    - name:  UNPRIVILEGED USERS | Get acl dependency (ansible unprivileged user operations magic)
+      apt: pkg="acl"
+      become: yes
+      tags: always
+
+    - name: gather facts
+      setup:
+      tags: always
+
+    - name: Check for common pretasks
+      local_action: stat path="{{shared_dir}}/common_pretasks.yml"
+      register: common_pretasks_exists
+      tags: always
+
+    - name: Include common pretasks
+      include_tasks: "{{shared_dir}}/common_pretasks.yml"
+      when: common_pretasks_exists.stat.exists == true
+      tags: always
+
+  roles:
+
+     - {
+        role: "sa-node",
+        tags: ["create", "sa_node"],
+        when: box_install_node_package
+       }
+
+     - {
+         role: "sa-node-nvm",
+#         nvm_version: "0.31.2",
+         nodejs_version: "{{ box_node_version }}",
+         deploy_user: "{{ box_deploy_user }}",
+         option_nodejs_install_with_nvm: true,
+         tags: ["create", "sa_node_nvm"],
+         when: box_install_node_nvm
+       }
+
+
+  tasks:
+
+    - debug: msg="Pre tasks section"

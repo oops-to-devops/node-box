@@ -1,0 +1,5 @@
+  box_install_node_package: true
+  box_install_node_nvm: false
+  
+  box_deploy_user: vagrant
+  box_node_version: "11.6.0"
