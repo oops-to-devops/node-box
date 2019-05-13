@@ -31,7 +31,7 @@ Using with vagrant boilerplate (https://github.com/Voronenko/devops-vagrant-ansi
 
 ```ruby
 
-    config.vm.provision "ansible" do |ansible|
+    config.vm.provision "node-box", type: "ansible" do |ansible|
         ansible.playbook = "deployment/provisioners/node-box/box_node.yml"
         ansible.galaxy_role_file = "deployment/provisioners/node-box/requirements.yml"
         ansible.galaxy_roles_path = "deployment/provisioners/node-box/roles"
