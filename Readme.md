@@ -1,5 +1,5 @@
-mysql-box
-=========
+node-box
+========
 
 Underlying ansible roles: `sa-node`, `sa-node-nvm`.  Check roles documentation for whole set of parameters to override.
 
